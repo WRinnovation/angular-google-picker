@@ -17,6 +17,7 @@
       this.scope = ['https://www.googleapis.com/auth/drive'];
       this.features = ['NAV_HIDDEN', 'MULTISELECT_ENABLED'];
       this.views = ['View(google.picker.ViewId.DOCS)', 'DocsUploadView()'];
+      this.locale = 'it';
 
       /**
        * Provider factory $get method
@@ -30,6 +31,7 @@
           scope: this.scope,
           features: this.features,
           views: this.views,
+          locale: this.locale,
           origin: this.origin || $window.location.protocol + '//' + $window.location.host
         }
       }];
@@ -44,7 +46,7 @@
       };
     })
 
-    .directive('lkGooglePicker', ['lkGoogleSettings', function (lkGoogleSettings) {
+    .directive('lkGooglePicker', ['$window', 'lkGoogleSettings', function ($window, lkGoogleSettings) {
       return {
         restrict: 'A',
         scope: {
@@ -94,27 +96,30 @@
            * Everything is good, open the files picker
            */
           function createPicker() {
-            var picker = new google.picker.PickerBuilder()
-              .setAppId(lkGoogleSettings.appId)
-              .setOAuthToken(oauthToken)
-              .setDeveloperKey(lkGoogleSettings.developerKey)
-              .setCallback(pickerCallback)
-              .setOrigin(lkGoogleSettings.origin);
+            if (pickerApiLoaded && oauthToken) {
+              var picker = new $window.google.picker.PickerBuilder()
+                .setAppId(lkGoogleSettings.appId)
+                .setOAuthToken(oauthToken)
+                .setDeveloperKey(lkGoogleSettings.developerKey)
+                .setLocale(lkGoogleSettings.locale)
+                .setCallback(pickerCallback)
+                .setOrigin(lkGoogleSettings.origin);
 
-            if (lkGoogleSettings.features.length > 0) {
-              lkGoogleSettings.features.forEach(function (feature, key) {
-                picker.enableFeature(google.picker.Feature[feature]);
-              });
+              if (lkGoogleSettings.features.length > 0) {
+                lkGoogleSettings.features.forEach(function (feature, key) {
+                  picker.enableFeature(google.picker.Feature[feature]);
+                });
+              }
+
+              if (lkGoogleSettings.views.length > 0) {
+                lkGoogleSettings.views.forEach(function (view, key) {
+                  view = eval('new google.picker.' + view);
+                  picker.addView(view);
+                });
+              }
+
+              picker.build().setVisible(true);
             }
-
-            if (lkGoogleSettings.views.length > 0) {
-              lkGoogleSettings.views.forEach(function (view, key) {
-                view = eval('new google.picker.' + view);
-                picker.addView(view);
-              });
-            }
-
-            picker.build().setVisible(true);
           }
 
           /**
