@@ -71,13 +71,16 @@
            * If user is already logged in, then open the Picker modal
            */
           function onAuthApiLoad() {
-            gapi.auth.authorize(
-              {
-                'client_id': lkGoogleSettings.clientId,
-                'scope': lkGoogleSettings.scope,
-                'immediate': false
-              },
-              handleAuthResult);
+            if (oauthToken) {
+              createPicker();
+            } else {
+              gapi.auth.authorize(
+                {
+                  'client_id': lkGoogleSettings.clientId,
+                  'scope': lkGoogleSettings.scope,
+                  'immediate': false
+                },
+                handleAuthResult);
           }
 
           function onPickerApiLoad() {
