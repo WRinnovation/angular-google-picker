@@ -7,13 +7,13 @@ var conventionalChangelog = require('gulp-conventional-changelog');
 gulp.task('default', ['watch']);
 
 // Copy non-uglify version to "dist"
-gulp.task('copy', ['test'], function () {
+gulp.task('copy', function () {
   return gulp.src('src/*.js')
     .pipe(gulp.dest('dist'));
 });
 
 // Create an uglify version to "dist" and "example"
-gulp.task('uglify', ['test'], function () {
+gulp.task('uglify', function () {
   return gulp.src('src/*.js')
     .pipe(uglify())
     .pipe(rename('google-picker.min.js'))
