@@ -103,7 +103,7 @@
                 .setDeveloperKey(lkGoogleSettings.developerKey)
                 .setLocale(lkGoogleSettings.locale)
                 .setCallback(pickerCallback)
-                .setOrigin(lkGoogleSettings.origin);
+                // .setOrigin(lkGoogleSettings.origin);
 
               if (lkGoogleSettings.features.length > 0) {
                 lkGoogleSettings.features.forEach(function (feature, key) {
