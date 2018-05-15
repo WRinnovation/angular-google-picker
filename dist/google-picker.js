@@ -24,7 +24,7 @@
        */
       this.$get = ['$window', function ($window) {
         return {
-          apiKey: this.apiKey,
+          developerKey: this.developerKey,
           clientId: this.clientId,
           appId: this.appId,
           scope: this.scope,
@@ -97,7 +97,7 @@
             var picker = new google.picker.PickerBuilder()
               .setAppId(lkGoogleSettings.appId)
               .setOAuthToken(oauthToken)
-              .setDeveloperKey(lkGoogleSettings.apiKey)
+              .setDeveloperKey(lkGoogleSettings.developerKey)
               .setCallback(pickerCallback)
               .setOrigin(lkGoogleSettings.origin);
 
