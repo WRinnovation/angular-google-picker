@@ -16,7 +16,7 @@
       this.appId = null;
       this.scope = ['https://www.googleapis.com/auth/drive'];
       this.features = ['NAV_HIDDEN', 'MULTISELECT_ENABLED'];
-      this.views = ['ViewId.DOCS', 'DocsUploadView()'];
+      this.views = ['View(google.picker.ViewId.DOCS)', 'DocsUploadView()'];
 
       /**
        * Provider factory $get method
