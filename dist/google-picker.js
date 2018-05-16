@@ -1,4 +1,6 @@
-/*
+/* 
+ * FORK BY Webranking, support picker API v3 and npm-ready
+ * 
  * angular-google-picker
  *
  * Interact with the Google API Picker
@@ -8,22 +10,18 @@
  * License: MIT
  */
 (function () {
-  angular.module('lk-google-picker', [])
+  angular.module('w-google-picker', [])
 
-    .provider('lkGoogleSettings', function () {
+    .provider('wGooglePickerSettings', function () {
       this.developerKey = null;
       this.clientId = null;
       this.appId = null;
       this.scope = ['https://www.googleapis.com/auth/drive'];
+      this.locale = 'it';
       this.features = ['MULTISELECT_ENABLED', 'SUPPORT_TEAM_DRIVES'];
       this.views = [
-        'View(google.picker.ViewId.DOCS)',
-        'DocsView.setEnableTeamDrives(true)',
-        'DocsView.setIncludeFolders(true)',
-        'DocsView.setSelectFolderEnabled(true)',
-        'DocsView.setMode(DocsViewMode.GRID)'
+        'DocsView().setIncludeFolders(true).setSelectFolderEnabled(true).setEnableTeamDrives(true)',
       ];
-      this.locale = 'it';
 
       /**
        * Provider factory $get method
@@ -52,7 +50,7 @@
       };
     })
 
-    .directive('lkGooglePicker', ['$window', 'lkGoogleSettings', function ($window, lkGoogleSettings) {
+    .directive('wGooglePicker', ['$window', 'wGooglePickerSettings', function ($window, wGoogleSettings) {
       return {
         restrict: 'A',
         scope: {
@@ -82,8 +80,8 @@
             } else {
               gapi.auth.authorize(
                 {
-                  'client_id': lkGoogleSettings.clientId,
-                  'scope': lkGoogleSettings.scope,
+                  'client_id': wGoogleSettings.clientId,
+                  'scope': wGoogleSettings.scope,
                   'immediate': false
                 },
                 handleAuthResult);
@@ -108,21 +106,21 @@
           function createPicker() {
             if (pickerApiLoaded && oauthToken) {
               var picker = new $window.google.picker.PickerBuilder()
-                .setAppId(lkGoogleSettings.appId)
+                .setAppId(wGoogleSettings.appId)
                 .setOAuthToken(oauthToken)
-                .setDeveloperKey(lkGoogleSettings.developerKey)
-                .setLocale(lkGoogleSettings.locale)
+                .setDeveloperKey(wGoogleSettings.developerKey)
+                .setLocale(wGoogleSettings.locale)
                 .setCallback(pickerCallback)
-                .setOrigin(lkGoogleSettings.origin);
+                .setOrigin(wGoogleSettings.origin);
 
-              if (lkGoogleSettings.features.length > 0) {
-                lkGoogleSettings.features.forEach(function (feature, key) {
+              if (wGoogleSettings.features.length > 0) {
+                wGoogleSettings.features.forEach(function (feature, key) {
                   picker.enableFeature(google.picker.Feature[feature]);
                 });
               }
 
-              if (lkGoogleSettings.views.length > 0) {
-                lkGoogleSettings.views.forEach(function (view, key) {
+              if (wGoogleSettings.views.length > 0) {
+                wGoogleSettings.views.forEach(function (view, key) {
                   view = eval('new google.picker.' + view);
                   picker.addView(view);
                 });
