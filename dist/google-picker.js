@@ -10,9 +10,9 @@
  * License: MIT
  */
 (function () {
-  angular.module('lk-google-picker', [])
+  angular.module('w-google-picker', [])
 
-    .provider('lkGooglePickerSettings', function () {
+    .provider('wGoogleSettings', function () {
       this.developerKey = null;
       this.clientId = null;
       this.appId = null;
@@ -50,7 +50,7 @@
       };
     })
 
-    .directive('lkGooglePicker', ['$window', 'lkGooglePickerSettings', function ($window, lkGoogleSettings) {
+    .directive('wGooglePicker', ['$window', 'wGoogleSettings', function ($window, wGoogleSettings) {
       return {
         restrict: 'A',
         scope: {
@@ -80,8 +80,8 @@
             } else {
               gapi.auth.authorize(
                 {
-                  'client_id': lkGoogleSettings.clientId,
-                  'scope': lkGoogleSettings.scope,
+                  'client_id': wGoogleSettings.clientId,
+                  'scope': wGoogleSettings.scope,
                   'immediate': false
                 },
                 handleAuthResult);
@@ -106,21 +106,21 @@
           function createPicker() {
             if (pickerApiLoaded && oauthToken) {
               var picker = new $window.google.picker.PickerBuilder()
-                .setAppId(lkGoogleSettings.appId)
+                .setAppId(wGoogleSettings.appId)
                 .setOAuthToken(oauthToken)
-                .setDeveloperKey(lkGoogleSettings.developerKey)
-                .setLocale(lkGoogleSettings.locale)
+                .setDeveloperKey(wGoogleSettings.developerKey)
+                .setLocale(wGoogleSettings.locale)
                 .setCallback(pickerCallback)
-                .setOrigin(lkGoogleSettings.origin);
+                .setOrigin(wGoogleSettings.origin);
 
-              if (lkGoogleSettings.features.length > 0) {
-                lkGoogleSettings.features.forEach(function (feature, key) {
+              if (wGoogleSettings.features.length > 0) {
+                wGoogleSettings.features.forEach(function (feature, key) {
                   picker.enableFeature(google.picker.Feature[feature]);
                 });
               }
 
-              if (lkGoogleSettings.views.length > 0) {
-                lkGoogleSettings.views.forEach(function (view, key) {
+              if (wGoogleSettings.views.length > 0) {
+                wGoogleSettings.views.forEach(function (view, key) {
                   view = eval('new google.picker.' + view);
                   picker.addView(view);
                 });
