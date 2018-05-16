@@ -15,8 +15,14 @@
       this.clientId = null;
       this.appId = null;
       this.scope = ['https://www.googleapis.com/auth/drive'];
-      this.features = ['NAV_HIDDEN', 'MULTISELECT_ENABLED'];
-      this.views = ['View(google.picker.ViewId.DOCS)', 'DocsUploadView()'];
+      this.features = ['MULTISELECT_ENABLED', 'SUPPORT_TEAM_DRIVES'];
+      this.views = [
+        'View(google.picker.ViewId.DOCS)',
+        'DocsView.setEnableTeamDrives(true)',
+        'DocsView.setIncludeFolders(true)',
+        'DocsView.setSelectFolderEnabled(true)',
+        'DocsView.setMode(DocsViewMode.GRID)'
+      ];
       this.locale = 'it';
 
       /**
@@ -107,7 +113,7 @@
                 .setDeveloperKey(lkGoogleSettings.developerKey)
                 .setLocale(lkGoogleSettings.locale)
                 .setCallback(pickerCallback)
-              // .setOrigin(lkGoogleSettings.origin);
+                .setOrigin(lkGoogleSettings.origin);
 
               if (lkGoogleSettings.features.length > 0) {
                 lkGoogleSettings.features.forEach(function (feature, key) {
