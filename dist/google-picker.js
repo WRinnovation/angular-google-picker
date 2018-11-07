@@ -60,12 +60,9 @@
         },
         link: function (scope, element, attrs) {
           var pickerApiLoaded = false;
-          var oauthToken = null;
+          var oauthToken;
 
-          /**
-           * Load required modules
-           */
-          function instantiate() {
+          function loadPicker() {
             gapi.load('auth', { 'callback': onAuthApiLoad });
             gapi.load('picker', { 'callback': onPickerApiLoad });
           }
@@ -75,17 +72,13 @@
            * If user is already logged in, then open the Picker modal
            */
           function onAuthApiLoad() {
-            if (oauthToken) {
-              createPicker();
-            } else {
-              gapi.auth.authorize(
-                {
-                  'client_id': wGoogleSettings.clientId,
-                  'scope': wGoogleSettings.scope,
-                  'immediate': false
-                },
-                handleAuthResult);
-            }
+            $window.gapi.auth.authorize(
+              {
+                'client_id': wGoogleSettings.clientId,
+                'scope': wGoogleSettings.scope,
+                'immediate': false
+              },
+              handleAuthResult);
           }
 
           function onPickerApiLoad() {
@@ -151,7 +144,7 @@
 
           element.bind('click', function (e) {
             /* dynamically load dependencies only on click */
-            instantiate();
+            loadPicker();
           });
         }
       }

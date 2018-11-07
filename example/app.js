@@ -1,11 +1,12 @@
-angular.module('GooglePickerExample', ['lk-google-picker'])
+angular.module('GooglePickerExample', ['w-google-picker'])
 
-.config(['lkGoogleSettingsProvider', function (lkGoogleSettingsProvider) {
+.config(['wGoogleSettingsProvider', function (wGoogleSettingsProvider) {
 
   // Configure the API credentials here
-  lkGoogleSettingsProvider.configure({
-    apiKey   : 'AIzaSyAEu079vZFFeuFjpfWOrcmw2uGxISgmWwI',
-    clientId : '20787361493-372fi66o31k7t4t2ha3nvj5j36blm417.apps.googleusercontent.com'
+  wGoogleSettingsProvider.configure({
+    developerKey: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    clientId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    appId: 'XXXXXXXXXXXXXXX'
   });
 }])
 
@@ -15,7 +16,7 @@ angular.module('GooglePickerExample', ['lk-google-picker'])
   };
 })
 
-.controller('ExampleCtrl', ['$scope', 'lkGoogleSettings', function ($scope, lkGoogleSettings) {
+.controller('ExampleCtrl', ['$scope', 'wGoogleSettings', function ($scope, wGoogleSettings) {
   $scope.files     = [];
   $scope.languages = [
     { code: 'en', name: 'English' },
@@ -24,10 +25,10 @@ angular.module('GooglePickerExample', ['lk-google-picker'])
     { code: 'ko', name: '한국' },
   ];
 
-  // Check for the current language depending on lkGoogleSettings.locale
+  // Check for the current language depending on wGoogleSettings.locale
   $scope.initialize = function () {
     angular.forEach($scope.languages, function (language, index) {
-      if (lkGoogleSettings.locale === language.code) {
+      if (wGoogleSettings.locale === language.code) {
         $scope.selectedLocale = $scope.languages[index];
       }
     });
@@ -52,6 +53,6 @@ angular.module('GooglePickerExample', ['lk-google-picker'])
 
   // Define the locale to use
   $scope.changeLocale = function (locale) {
-    lkGoogleSettings.locale = locale.code;
+    wGoogleSettings.locale = locale.code;
   };
 }]);

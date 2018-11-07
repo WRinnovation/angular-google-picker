@@ -11,11 +11,11 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300&amp;subset=latin,cyrillic-ext,greek-ext,greek,vietnamese,latin-ext,cyrillic" rel="stylesheet">
 
     <!-- Google API -->
-    <script src="//apis.google.com/js/client.js"></script>
-    <script src="//apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
     <!-- Angular -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 
     <!-- Angular Google picker -->
     <script src="google-picker.min.js"></script>
@@ -40,7 +40,7 @@
             </p>
 
             <div>
-              <a href="javascript:;" lk-google-picker on-picked="onPicked(docs)" on-loaded="onLoaded()" on-cancel="onCancel()" class="btn btn-2 btn-2c btn-blue">
+              <a href="javascript:;" w-google-picker on-picked="onPicked(docs)" on-loaded="onLoaded()" on-cancel="onCancel()" class="btn btn-2 btn-2c btn-blue">
                 <i class="fa fa-inbox"></i>
                 <span>Pick files</span>
               </a>
